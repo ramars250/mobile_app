@@ -47,7 +47,7 @@ class _MobileViewState extends State<MobileView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              '尚未登入，請先點擊右上角登入',
             ),
             Text(
               '$_counter',
