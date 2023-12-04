@@ -80,7 +80,7 @@ class ScheduleView extends StatelessWidget {
   Widget build(BuildContext context) {
     List<List<String>> calendarDays = getCalendarDays();
 
-    // 生成日历日期的网格部分
+    // 生成日曆與日期的網格部分
     List<Widget> calendarGrid = List.generate(calendarDays.length, (index) {
       return Container(
         decoration: BoxDecoration(
@@ -93,7 +93,8 @@ class ScheduleView extends StatelessWidget {
               calendarDays[index][0],
               style: const TextStyle(fontSize: 20.0),
             ),
-            const Divider(height: 4), // 添加间距以分隔日期和事件信息
+            //添加間距分隔日期與事件訊息
+            const Divider(height: 4),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -125,7 +126,7 @@ class ScheduleView extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 2,
             child: Column(
               children: [
-                // 将日期部分放置在日历上方
+                // 将日期部分放置在日曆上方
                 Row(
                   children: daysOfWeek
                       .map((day) => Expanded(
