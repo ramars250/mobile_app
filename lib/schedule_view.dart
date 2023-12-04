@@ -121,7 +121,7 @@ class ScheduleView extends StatelessWidget {
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Container(
-            padding: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+            padding: const EdgeInsets.only(top: 40.0, left: 10.0, right: 10.0),
             height: MediaQuery.of(context).size.height * 2,
             width: MediaQuery.of(context).size.width * 2,
             child: Column(
