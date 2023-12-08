@@ -82,6 +82,14 @@ class ScheduleView extends StatelessWidget {
 
     // 生成日曆與日期的網格部分
     List<Widget> calendarGrid = List.generate(calendarDays.length, (index) {
+      // 檢查星期幾，1代表星期日，0代表星期六
+      int dayOfWeek = (index + 1) % 7;
+      Color textColor = Colors.black; // 預設文字顏色為黑色
+
+      // 如果是星期六或星期日，設定文字顏色為紅色
+      if (dayOfWeek == 1 || dayOfWeek == 0) {
+        textColor = Colors.red;
+      }
       return Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
@@ -91,7 +99,10 @@ class ScheduleView extends StatelessWidget {
           children: [
             Text(
               calendarDays[index][0],
-              style: const TextStyle(fontSize: 20.0),
+              style: TextStyle(
+                fontSize: 20.0,
+                color: textColor,
+              ),
             ),
             //添加間距分隔日期與事件訊息
             const Divider(height: 4),
