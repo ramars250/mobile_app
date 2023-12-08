@@ -11,7 +11,7 @@ class ScheduleView extends StatelessWidget {
     'Sat'
   ];
   final List<String> yourData = [
-    'Event 1\nEvent 1\nEvent 1\nEvent 1\nEvent 1\nEvent 1\nEvent 1\nEvent 1\nEvent 1',
+    'Event 1\nEvent 1.0\nEvent 1.1\nEvent 1.2\nEvent 1.3\nEvent 1.4\nEvent 1.5\nEvent 1.6\nEvent 1.7',
     'Event 2',
     'Event 3',
     'Event 4',
@@ -50,46 +50,55 @@ class ScheduleView extends StatelessWidget {
     DateTime now = DateTime.now();
     int year = now.year;
     int month = now.month;
-
     List<List<String>> calendarDays = [];
-
     DateTime firstDayOfMonth = DateTime(year, month, 1);
-
     for (int i = 0; i < firstDayOfMonth.weekday % 7; i++) {
       calendarDays.add(['', '']);
     }
-
     DateTime lastDayOfMonth = DateTime(year, month + 1, 0);
     int daysInMonth = lastDayOfMonth.day;
-
     for (int i = 1; i <= daysInMonth; i++) {
       calendarDays.add([i.toString(), yourData[i - 1]]);
     }
-
     int remainingEmptySpaces = 7 - (calendarDays.length % 7);
     if (remainingEmptySpaces != 7) {
       for (int i = 0; i < remainingEmptySpaces; i++) {
         calendarDays.add(['', '']);
       }
     }
-
     return calendarDays;
   }
 
   @override
   Widget build(BuildContext context) {
     List<List<String>> calendarDays = getCalendarDays();
-
     // 生成日曆與日期的網格部分
     List<Widget> calendarGrid = List.generate(calendarDays.length, (index) {
       // 檢查星期幾，1代表星期日，0代表星期六
       int dayOfWeek = (index + 1) % 7;
-      Color textColor = Colors.black; // 預設文字顏色為黑色
-
+      // 預設文字顏色為黑色
+      Color textColor = Colors.black;
       // 如果是星期六或星期日，設定文字顏色為紅色
       if (dayOfWeek == 1 || dayOfWeek == 0) {
         textColor = Colors.red;
       }
+      // 將事件字串分割成單獨的事件
+      List<String> events = calendarDays[index][1].split('\n');
+      // 創建包含事件的小部件列表
+      List<Widget> eventsWidgets = events
+          .map((event) => GestureDetector(
+                onTap: () {
+                  // 在此處添加點擊事件時要執行的操作
+                  print('你點擊了事件：$event');
+                  // 在這裡可以放置你想要執行的操作，比如導航到新的頁面或顯示詳細資訊等
+                },
+                child: Text(
+                  event,
+                  style: const TextStyle(fontSize: 16.0),
+                  textAlign: TextAlign.center,
+                ),
+              ))
+          .toList();
       return Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
@@ -109,10 +118,8 @@ class ScheduleView extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Text(
-                  calendarDays[index][1],
-                  style: const TextStyle(fontSize: 16.0),
-                  textAlign: TextAlign.center,
+                child: Column(
+                  children: eventsWidgets,
                 ),
               ),
             ),
@@ -120,7 +127,6 @@ class ScheduleView extends StatelessWidget {
         ),
       );
     });
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
